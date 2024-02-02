@@ -13,7 +13,6 @@ import javax.swing.undo.UndoManager;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
 /**
  *
  * @author alu13114532
@@ -27,88 +26,87 @@ public class NotePad extends javax.swing.JFrame {
         initComponents();
         myInit();
     }
-    
+
     public void myInit() {
         setLocationRelativeTo(null);
         jTextAreaText.getDocument().addUndoableEditListener(manager);
-        addWindowListener(new WindowAdapter(){
+        addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 System.out.println("WINDOW CLOSING");
             }
         });
     }
-    
+
     private File file = null;
     UndoManager manager = new UndoManager();
-    
+
     private void load() {
         JFileChooser chooser = new JFileChooser();
         int returnVal = chooser.showOpenDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             file = chooser.getSelectedFile();
             try {
-              openFile(file);  
-            } catch(IOException ex){
-                
+                openFile(file);
+            } catch (IOException ex) {
+
             }
         }
     }
-    
+
     private void save() throws IOException {
-       JFileChooser chooser = new JFileChooser();
-       PrintWriter output = null;
-            try {
+        JFileChooser chooser = new JFileChooser();
+        PrintWriter output = null;
+        try {
             output = new PrintWriter(new FileWriter(file));
             String line = jTextAreaText.getText();
             output.print(line);
-            } catch(IOException ex){
-                
-            } finally { 
-               if(output != null) {
-                   output.close();
-               }
+        } catch (IOException ex) {
+
+        } finally {
+            if (output != null) {
+                output.close();
             }
-        } 
-    
-    
+        }
+    }
+
     private void saveAs() throws IOException {
-       JFileChooser chooser = new JFileChooser();
-       PrintWriter output = null;
+        JFileChooser chooser = new JFileChooser();
+        PrintWriter output = null;
         int returnVal = chooser.showSaveDialog(this);
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
+        if (returnVal == JFileChooser.APPROVE_OPTION) {
             file = chooser.getSelectedFile();
             try {
-            output = new PrintWriter(new FileWriter(file));
-            String line = jTextAreaText.getText();
-            output.print(line);
-            } catch(IOException ex){
-                
-            } finally { 
-               if(output != null) {
-                   output.close();
-               }
+                output = new PrintWriter(new FileWriter(file));
+                String line = jTextAreaText.getText();
+                output.print(line);
+            } catch (IOException ex) {
+
+            } finally {
+                if (output != null) {
+                    output.close();
+                }
             }
-        } 
+        }
     }
-    
+
     private void openFile(File file) throws IOException {
         BufferedReader input = null;
         /*String fileType = Files.probeContentType(Path.of(file.getAbsolutePath()));
         if(!fileType.equals("text/plain")) {
             throw new IOException("Not a text file");
         }*/
-        try{
+        try {
             input = new BufferedReader(new FileReader(file));
             String line;
             String text = "";
-            while((line = input.readLine()) != null) {
+            while ((line = input.readLine()) != null) {
                 text += line + "\n";
             }
             jTextAreaText.setText(text);
             setTitle(file.getName());
         } finally {
-            if(input != null) {
+            if (input != null) {
                 input.close();
             }
         }
@@ -285,8 +283,8 @@ public class NotePad extends javax.swing.JFrame {
 
     private void jButtonSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaveActionPerformed
         try {
-            if(file!= null) {
-               save(); 
+            if (file != null) {
+                save();
             } else {
                 saveAs();
             }
@@ -297,8 +295,8 @@ public class NotePad extends javax.swing.JFrame {
 
     private void jMenuItemSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemSaveActionPerformed
         try {
-             if(file!= null) {
-               save(); 
+            if (file != null) {
+                save();
             } else {
                 saveAs();
             }
@@ -315,19 +313,24 @@ public class NotePad extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemNewActionPerformed
 
     private void jMenuItemUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemUndoActionPerformed
-        if(manager.canUndo()) {
+        if (manager.canUndo()) {
             manager.undo();
         }
     }//GEN-LAST:event_jMenuItemUndoActionPerformed
 
     private void jMenuItemRedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemRedoActionPerformed
-        if(manager.canRedo()) {
+        if (manager.canRedo()) {
             manager.redo();
         }
     }//GEN-LAST:event_jMenuItemRedoActionPerformed
 
     private void jMenuItemAboutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemAboutActionPerformed
-        JOptionPane.showMessageDialog(null, "Bienvenidos a mi primer Block de notas, aqui su humilede anfitrion Tano");
+        String s = jTextAreaText.getText();
+        if ( s.equals("Luna")) {
+            JOptionPane.showMessageDialog(null, "Te amo mi vida hermosa, sigue brillando");
+        } else {
+            JOptionPane.showMessageDialog(null, "Bienvenidos a mi primer Block de notas, aqui su humilede anfitrion Tano");
+        }
     }//GEN-LAST:event_jMenuItemAboutActionPerformed
 
     /**
